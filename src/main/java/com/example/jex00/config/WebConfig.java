@@ -1,11 +1,11 @@
 package com.example.jex00.config;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.Filter;
+
 
 @Log4j2
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -32,5 +32,16 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() { //필터의 값을 반환하도록
+
+        CharacterEncodingFilter utf8filter = new CharacterEncodingFilter();
+        utf8filter.setEncoding("UTF-8");
+        utf8filter.setForceEncoding(true);
+
+        return new Filter[]{utf8filter};
+
     }
 }
